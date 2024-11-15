@@ -2,7 +2,7 @@
 
 # Serverless Azure OpenAI Quick Start with LlamaIndex <br> (JavaScript)
 
-[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/Azure-Samples/llama-index-javascript?hide_repo_select=true&ref=main&quickstart=true)
+[![Open project in GitHub Codespaces](https://img.shields.io/badge/Codespaces-Open-blue?style=flat-square&logo=github)](https://codespaces.new/biancajiang/llama-index-javascript?hide_repo_select=true&ref=main&quickstart=true)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/Azure-Samples/llama-index-javascript/build-test.yaml?style=flat-square&label=Build)](https://github.com/Azure-Samples/llama-index-javascript/actions)
 ![Node version](https://img.shields.io/badge/Node.js->=20-3c873a?style=flat-square)
 [![License](https://img.shields.io/badge/License-MIT-pink?style=flat-square)](LICENSE)
