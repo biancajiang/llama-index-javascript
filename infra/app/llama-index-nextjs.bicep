@@ -44,6 +44,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
 // Roles
 
 // User roles
+/*
 module openAiRoleUser '../shared/role.bicep' = if (empty(runningOnGh)) {
   name: guid(subscription().id, resourceGroup().id, identity.id, 'openaiUserRole')
   params: {
@@ -64,6 +65,8 @@ module openAiRoleBackend '../shared/role.bicep' = {
     principalType: 'ServicePrincipal'
   }
 }
+*/
+
 module acrPullRole '../shared/role.bicep' = {
   name: guid(subscription().id, resourceGroup().id, identity.id, 'acrPullRole')
   params: {

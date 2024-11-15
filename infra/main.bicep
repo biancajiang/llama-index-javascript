@@ -19,13 +19,18 @@ param llamaIndexNextjsDefinition object
 @description('Id of the user or app to assign application roles')
 param principalId string
 
+// Comment out Azure OpenAI related parameters
+/*
 param openAiLocation string // Set in main.parameters.json
 param openAiSkuName string = 'S0' // Set in main.parameters.json
 param openAiUrl string = '' // Set in main.parameters.json
 param openAiApiVersion string // Set in main.parameters.json
+*/
 
 var finalOpenAiUrl = empty(openAiUrl) ? 'https://${openAi.outputs.name}.openai.azure.com' : openAiUrl
 
+// Comment out LlamaIndex config as it's now handled by env vars
+/*
 var llamaIndexConfig = {
   chat: {
     model: 'gpt-35-turbo'
@@ -47,6 +52,7 @@ var llamaIndexConfig = {
   fileserver_url_prefix: 'http://localhost/api/files'
   system_prompt: 'You are a helpful assistant who helps users with their questions.'
 }
+*/
 
 // Tags that should be applied to all resources.
 // 
@@ -121,6 +127,8 @@ module appsEnv './shared/apps-env.bicep' = {
   scope: rg
 }
 
+// Comment out cognitive services module reference
+/*
 module openAi './shared/cognitiveservices.bicep' = if (empty(openAiUrl)) {
   name: 'openai'
   scope: rg
@@ -156,6 +164,7 @@ module openAi './shared/cognitiveservices.bicep' = if (empty(openAiUrl)) {
     ]
   }
 }
+*/
 
 module llamaIndexNextjs './app/llama-index-nextjs.bicep' = {
   name: 'llama-index-nextjs'
@@ -180,6 +189,8 @@ module llamaIndexNextjs './app/llama-index-nextjs.bicep' = {
           name: 'AZURE_KEY_VAULT_ENDPOINT' 
           value: keyVault.outputs.endpoint
         }
+        // Comment out all OpenAI related settings as they're now handled by env vars
+        /*
         {
           name: 'AZURE_OPENAI_ENDPOINT' 
           value: finalOpenAiUrl
@@ -232,16 +243,20 @@ module llamaIndexNextjs './app/llama-index-nextjs.bicep' = {
           name: 'OPENAI_API_TYPE'
           value: 'AzureOpenAI'
         }
+        */
       ]
     })
   }
   scope: rg
 }
 
+// Keep basic infrastructure outputs
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = registry.outputs.loginServer
 output AZURE_KEY_VAULT_NAME string = keyVault.outputs.name
 output AZURE_KEY_VAULT_ENDPOINT string = keyVault.outputs.endpoint
 
+// Comment out all OpenAI and LlamaIndex related outputs
+/*
 output AZURE_OPENAI_ENDPOINT string = finalOpenAiUrl
 output AZURE_DEPLOYMENT_NAME string = llamaIndexConfig.chat.deployment
 output OPENAI_API_VERSION string = openAiApiVersion
@@ -258,3 +273,4 @@ output TOP_K string = llamaIndexConfig.top_k
 output FILESERVER_URL_PREFIX string = llamaIndexConfig.fileserver_url_prefix
 output SYSTEM_PROMPT string = llamaIndexConfig.system_prompt
 output OPENAI_API_TYPE string = 'AzureOpenAI'
+*/

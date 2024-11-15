@@ -1,8 +1,31 @@
-/** @type {import('next').NextConfig} */
-import fs from "fs";
-import webpack from "./webpack.config.mjs";
+import { ModuleAlias } from '@langtrase/typescript-sdk/dist/webpack/plugins/ModuleAlias.js';
 
-const nextConfig = JSON.parse(fs.readFileSync("./next.config.json", "utf-8"));
-nextConfig.webpack = webpack;
+const nextConfig = {
+    webpack: (config, { isServer }) => {
+        if (isServer) {
+            config.resolve.plugins = [
+                ...(config.resolve.plugins || []),
+                new ModuleAlias(process.cwd())
+            ];
+            config.module.rules.push({
+                loader: "node-loader",
+                test: /\.node$/,
+            });
+            config.ignoreWarnings = [{ module: /opentelemetry/ }];
+        }
+        return config;
+    },
+    experimental: {
+        outputFileTracingIncludes: {
+            "/*": [
+                "./cache/**/*"
+            ]
+        },
+        serverComponentsExternalPackages: [
+            "sharp",
+            "onnxruntime-node"
+        ]
+    }
+};
 
 export default nextConfig;

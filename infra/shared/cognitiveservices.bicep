@@ -1,4 +1,5 @@
-metadata description = 'Creates an Azure Cognitive Services instance.'
+// Comment out the entire file contents since we're not using Azure OpenAI
+/* 
 param name string
 param location string = resourceGroup().location
 param tags object = {}
@@ -57,3 +58,4 @@ output endpoint string = account.properties.endpoint
 output id string = account.id
 output name string = account.name
 output identityPrincipalId string = account.identity.principalId
+*/

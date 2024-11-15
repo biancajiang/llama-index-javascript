@@ -1,4 +1,8 @@
-import { initObservability } from "@/app/observability";
+import * as Langtrace from '@langtrase/typescript-sdk';
+import * as openai from 'openai'
+import * as llamaindex from 'llamaindex';
+
+// import { initObservability } from "@/app/observability";
 import { Message, StreamData, StreamingTextResponse } from "ai";
 import { ChatMessage, MessageContent, Settings } from "llamaindex";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,7 +11,12 @@ import { initSettings } from "./engine/settings";
 import { LlamaIndexStream } from "./llamaindex-stream";
 import { createCallbackManager } from "./stream-helper";
 
-initObservability();
+Langtrace.init({ 
+  api_key: process.env.LANGTRACE_API_KEY,
+  instrumentations: {llamaindex, openai},
+  batch: false 
+})
+// initObservability();
 initSettings();
 
 export const runtime = "nodejs";
